@@ -1,0 +1,35 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}
+
+        </title>
+        {% block metas %}
+        <meta name="viewport"content="width=device-width,initial-scale=1, shrink-to-fit=no">
+        {% endblock %}
+        {% block styles %}
+
+        {% endblock %}
+    </head>
+    
+    <body>
+        {% block nav %}
+        <nav>
+            <h1> Gestion des Mods</h1>
+        </nav>
+        {% endblock %}
+        <main role="main">
+            <div>
+                {% block content %}
+                 {% endblock %}
+                </div>
+            </main>
+            {% block js %}
+            {% endblock %}
+        </body>
+
+</html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+    {% block title %}
+    Mods Minecraft
+    {% endblock %}
+    {% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+    {% endblock %}
+    {% block content %}
+    <h1>Liste des Mods</h1>
+    
+    {% for mod in mods %}
+    <div>
+        <div>{{mod.name}}</div>
+        <div>{{mod.created_date}}</div>
+        <div>{{mod.creator}}</div> 
+
+    </div>
+
+    {% endfor %}
+
+    {% endblock %}
