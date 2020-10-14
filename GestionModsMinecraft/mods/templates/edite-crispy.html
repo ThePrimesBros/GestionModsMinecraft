@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Modification de la tache {{ pers.firstname }} {{ pers.name }}
+{% endblock %}
+
+{% block navtitle %}
+<div class="text-white">
+Modification de la tache <i>{{ pers.firstname }} {{ pers.name }}</i>
+</div>
+{% endblock %}
+
+{% block header %}
+{% if messages %}
+{% for message in messages %}
+<h1>{{message}}</h1>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<form method="post" action="/mods/edit/{{pers.pk}}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-6">
+            {{ form.name|as_crispy_field }}
+        </div>
+        <div class="col-6">
+            {{ form.description|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.scheduled_date|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.due_date|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.user|as_crispy_field }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        Sauvegarder les modifications
+    </button>
+</form>
+
+{% endblock %}

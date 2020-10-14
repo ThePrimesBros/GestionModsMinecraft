@@ -1,25 +1,56 @@
-{% extends "base.html" %}
-    {% block title %}
-    Mods Minecraft
-    {% endblock %}
-    {% block styles %}
-    {{ block.super }}
-    <link rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-    {% endblock %}
-    {% block content %}
-    <h1>Liste des Mods</h1>
-    
-    {% for mod in mods %}
-    <div>
-        <div>{{mod.name}}</div>
-        <div>{{mod.created_date}}</div>
-        <div>{{mod.creator}}</div> 
+{% extends "baseBS4.html" %}
 
-    </div>
+    {% load static %}
+
+    {% block title %}
+        Les Tâches
+    {% endblock %}
+
+    {% block styles %}
+        {{ block.super }}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" 
+          crossorigin="anonymous">
+    {% endblock %}
+
+    {% block content %}
+    <h1 class="text-center mb-5">Liste des tâches</h1>
+    <div>
+ 
+        <table class="text-center">
+            <tr>
+                <td></td>
+                <td class="font-weight-bold">Nom du mods</td>
+                <td class="font-weight-bold">Créateur</td>
+                <td class="font-weight-bold">Version</td>
+                <td class="font-weight-bold">Modification du mods</td>
+                <td class="font-weight-bold">Suppression du mods</td>
+                <td class="font-weight-bold">Voir plus de détails</td>
+            </tr>
+        {% for mods in objects %}
+            <tr>
+                <td><img src="{{mods.img}}" width="50%"></td>
+                <td class="col-2">{{mods.title}}</td>
+                <td class="col-3">{{mods.creator}}</td>
+                <td class="col-3">{{mods.version}}</td>
+                <td class="col-3">
+                    <a class="bg-primary btn btn-primary mb-3" href="http://localhost:8000/mods/edit/{{mods.id}}">Modifier</a>
+                </td>
+                <td class="col-3">
+                    <a class="btn btn-danger mb-3" href="http://localhost:8000/mods/del/{{mods.id}}">Supprimer</a>
+                </td>
+
+                <td class="col-3">
+                    <a class="btn btn-info mb-3"  href="http://localhost:8000/mods/detail/{{mods.id}}">Détails</a>
+                </td>
+                    
+            </tr>
 
     {% endfor %}
+</table>
+    <div class="text-center"><br>
+        <a class="btn btn-success m-3" href="http://localhost:8000/mods/">Ajouter un nouveau mods</a>
+    </div>
+   
 
     {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+Création d'une nouvelle tache
+{% endblock %}
+
+{% block navtitle %}
+<div class="text-white">Création d'une nouvelle tache</div>
+{% endblock %}
+
+{% block content%}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-success mb-3 mt-3">
+        Ajouté un nouveau mods
+    </button>
+</form>
+<div class="text-left"><br>
+    <a class="btn btn-primary mb-3" href="http://localhost:8000/lesTaches/listing">Retour a la liste</a>
+</div>
+{% endblock %}
