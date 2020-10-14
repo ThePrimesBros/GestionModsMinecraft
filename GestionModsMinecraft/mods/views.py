@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from mods.models import Mods
-
-
-
-
 from django.forms import ModelForm , Textarea
 from django.forms.fields import DateField , ChoiceField ,MultipleChoiceField
 from django import forms
@@ -49,7 +45,7 @@ def task(request):
 
 def detail(request, cid):
     tache = Mods.objects.get(pk=cid)
-    return HttpResponse('Nouvelle tache '+tache.name+' '+tache.email)
+    return HttpResponse('Nouvelle tache '+tache.title+' '+tache.version)
 
 
 def edit(request, pers_id):
@@ -77,7 +73,7 @@ def delete(request, pers_id):
     #messages.success(request, 'Personne '+pers.name+' supprimée!')
     form = ModsForm()
     context = {'form': form}
-    return redirect('http://localhost:8000/mods/listing/')
+    return redirect('http://localhost:8000/mods/listing')
 
 
 def liste(request):

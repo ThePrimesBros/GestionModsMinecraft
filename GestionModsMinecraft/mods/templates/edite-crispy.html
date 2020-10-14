@@ -1,47 +1,65 @@
-{% extends "base.html" %}
+{% extends "baseBS4.html" %}
 
 {% load crispy_forms_tags %}
 
 {% block title %}
-Modification de la tache {{ pers.firstname }} {{ pers.name }}
+Modification du mods {{ pers.title }}
 {% endblock %}
 
 {% block navtitle %}
 <div class="text-white">
-Modification de la tache <i>{{ pers.firstname }} {{ pers.name }}</i>
+Modification du mods <i>{{ pers.title }}</i>
 </div>
 {% endblock %}
 
 {% block header %}
-{% if messages %}
-{% for message in messages %}
-<h1>{{message}}</h1>
-{% endfor %}
-{% endif %}
+<div class="mb-5 text-center">
+    <h1>Modification du mods <i>{{ pers.title }}</i></h1>
+    </div>
 {% endblock %}
-
 {% block content %}
 
 <form method="post" action="/mods/edit/{{pers.pk}}">
+    
     {% csrf_token %}
-    <div class="row">
-        <div class="col-6">
-            {{ form.name|as_crispy_field }}
+    <div class="row mx-auto w-100">
+    <div class="col-6 mx-auto">
+        <div class="col-12">
+            {{ form.title|as_crispy_field }}
         </div>
-        <div class="col-6">
+        <div class="col-12">
             {{ form.description|as_crispy_field }}
         </div>
         <div class="col-12">
-            {{ form.scheduled_date|as_crispy_field }}
+            {{ form.creator|as_crispy_field }}
         </div>
         <div class="col-12">
-            {{ form.due_date|as_crispy_field }}
+            {{ form.version|as_crispy_field }}
         </div>
         <div class="col-12">
-            {{ form.user|as_crispy_field }}
+            {{ form.download|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.img|as_crispy_field }}
         </div>
     </div>
-    <button type="submit" class="btn btn-success">
+    <div class="col-6 mx-auto">
+        <div class="card mx-auto mb-4" style="width: 18rem;">
+            <img class="card-img-top" src="{{pers.img}}" alt="Card image cap">
+            <div class="card-body text-left">
+                <h5 class="card-title">{{pers.title}}</h5>
+                <p><small class="text-muted">Par {{pers.creator}}</small></p>
+                <p><small class="text-muted">Version : {{pers.version}}</small></p>
+                <p class="card-text">{{pers.description}}</p>
+                <div class="d-flex justify-content-between">
+                <button class="btn btn-primary">Détails</button>
+                <button class="btn btn-danger">Suppression</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <button type="submit" class="btn btn-success m-4">
         Sauvegarder les modifications
     </button>
 </form>
