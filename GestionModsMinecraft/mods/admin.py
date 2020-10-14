@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from mods.models import News
+from mods.models import Mods
 
-class NewsAdmin(admin.ModelAdmin):
+class ModsAdmin(admin.ModelAdmin):
     list_display=('title','link')
     
-admin.site.register(News, NewsAdmin)
+admin.site.register(Mods, ModsAdmin)
