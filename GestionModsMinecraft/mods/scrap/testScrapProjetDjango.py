@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import time
 import re
 import sys
+from mods.models import Mods
+
 
 MATCH_ALL = r'.*'
 
@@ -90,14 +92,16 @@ def scrapPage(request):
         r2 = requests.get(linkPage.replace(' ',''))
         soup2 = BeautifulSoup(r2.text,"lxml")   
         divdownload = find_by_text(soup2, 'Download', 'a')
-        if divdownload['href'] != 'Nonetype'
-        linkDownload = divdownload['href']
+        if divdownload['href'] != 'Nonetype':
+            linkDownload = divdownload['href']
+        else: 
+            linkDownload =''
         print('Lien download:')
         print(linkDownload)
         print('//////////////////////////////////////////////')
            
 
-scrap(72)
+scrap(40)
 
 
 
