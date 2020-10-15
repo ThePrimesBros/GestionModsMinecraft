@@ -79,3 +79,4 @@ def delete(request, pers_id):
 def liste(request):
     objects = Mods.objects.all().order_by('title')
     return render(request, template_name='list2.html', context={'objects': objects} )
+

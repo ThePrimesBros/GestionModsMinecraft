@@ -8,7 +8,7 @@ Modification du mods {{ pers.title }}
 
 {% block navtitle %}
 <div class="text-white">
-Modification du mods <i>{{ pers.title }}</i>
+<h3>Modification du mods <i>{{ pers.title }}</i></h3>
 </div>
 {% endblock %}
 
@@ -22,8 +22,8 @@ Modification du mods <i>{{ pers.title }}</i>
 <form method="post" action="/mods/edit/{{pers.pk}}">
     
     {% csrf_token %}
-    <div class="row mx-auto w-100">
-    <div class="col-6 mx-auto">
+    <div class="d-md-flex mx-auto w-100 flex-wrap">
+    <div class="col-sm-12 col-md-6 mx-auto">
         <div class="col-12">
             {{ form.title|as_crispy_field }}
         </div>
@@ -43,7 +43,7 @@ Modification du mods <i>{{ pers.title }}</i>
             {{ form.img|as_crispy_field }}
         </div>
     </div>
-    <div class="col-6 mx-auto">
+    <div class="col-sm-12 col-md-6 mx-auto">
         <div class="card mx-auto mb-4" style="width: 18rem;">
             <img class="card-img-top" src="{{pers.img}}" alt="Card image cap">
             <div class="card-body text-left">

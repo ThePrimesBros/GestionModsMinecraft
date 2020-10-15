@@ -1,4 +1,13 @@
 body{
-    background: darkcyan;
-    color: whitesmoke;
+    background-image: url(https://blog.fr.playstation.com/tachyon/sites/10/2020/09/Minecraft-Key-Art_nologo.jpeg);
+    background-attachment: fixed;
+}
+.width{
+    width: 90%;
+}
+.opacity{
+    opacity: 0.95
+}
+.opacity-none{
+    opacity: none;
 }
