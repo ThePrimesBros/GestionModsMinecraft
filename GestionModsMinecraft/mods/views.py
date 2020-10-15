@@ -88,11 +88,9 @@ def liste(request):
     return render(request, template_name='list2.html', context={'objects': objects} )
 
 def scrap(request):
-    scrap(3)
-    context = {
-        'new_mod_id': mod.pk,
-    }
-    return render(request,'list2.html', context)
+    nbPage = 75
+    scraping(nbPage)
+    return render(request,'list2.html')
 
 def like(string):
     """
@@ -127,54 +125,40 @@ def find_by_text(soup, text, tag, **kwargs):
     else:
         return matches[0]
 
-def scrap(nbPage):
+def scraping(nbPage):
     r = requests.get(URL)
     scrapPage(r)
-    if int(nbPage) > 1 :      
+    if nbPage > 1 :      
         for i in range(2,nbPage):
+            print("Page"+str(i))
             r2 = requests.get(URL+"page/"+str(i)+"/")
             scrapPage(r2)
 
 def scrapPage(request):
     soup = BeautifulSoup(request.text,"lxml")
-    #print(soup.prettify())
     blogRow = soup.find("section", {"class" : 'main-content'})
     childrenArticles = blogRow.findChildren("article")
     for child in childrenArticles:
         mod = Mods()
         a = child.find("a", {"class" : 'transition'})
-        print('Lien image:')
-        print(a.img['src'])
         mod.img = a.img['src']
         h2 = child.find("h2", {"class" : 'post-title'})
-        print('Lien page:')
-        print(h2.a['href'])
         linkPage = h2.a['href']
-        print('Titre:')
-        print(h2.text)
         mod.title = h2.text
         divdesc = child.find("div", {"class" : 'post-content'})
-        print('Description:')
-        print(divdesc.text)
         mod.description = divdesc.text
         divcreaver = child.find("div", {"class" : 'post-meta'})
         divver = divcreaver.find("span", {"class" : 'version'})
-        print('Version:')
-        print(divver.text)
         mod.version = divver.text
         divcrea = divcreaver.find("span", {"class" : 'developer'})
-        print('Creator:')
-        print(divcrea.text)
         mod.creator = divcrea.text
         r2 = requests.get(linkPage.replace(' ',''))
         soup2 = BeautifulSoup(r2.text,"lxml")   
         divdownload = find_by_text(soup2, 'Download', 'a')
-        if divdownload['href'] != 'Nonetype':
-            linkDownload = divdownload['href']
-        else: 
+        if divdownload == None:
             linkDownload =''
-        print('Lien download:')
-        print(linkDownload)
+        else: 
+            linkDownload = divdownload['href']
         mod.download = linkDownload
         mod.save()
         
