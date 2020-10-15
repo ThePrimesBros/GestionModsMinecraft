@@ -1,18 +1,19 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+#from selenium import webdriver
+#from selenium.webdriver.common.keys import Keys
 import time
 import re
+import sys
 
 MATCH_ALL = r'.*'
 
 URL = "https://www.minecraftmods.com/"
-#headers = { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36' }
+#headers = { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKhttps://www.minecraftmods.com/page/2/37.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36' }
 
 
-#browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')
+#browser = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver')https://www.minecraftmods.com/page/2/
 #browser.get(URL)
 #time.sleep(1)
 #print(browser.title)
@@ -52,41 +53,53 @@ def find_by_text(soup, text, tag, **kwargs):
     else:
         return matches[0]
 
+def scrap(nbPage):
+    r = requests.get(URL)
+    scrapPage(r)
+    if nbPage > 1 :      
+        for i in range(2,nbPage):
+            r2 = requests.get(URL+"page/"+str(i)+"/")
+            scrapPage(r2)
+
+def scrapPage(request):
+    soup = BeautifulSoup(request.text,"lxml")
+    #print(soup.prettify())
+    blogRow = soup.find("section", {"class" : 'main-content'})
+    childrenArticles = blogRow.findChildren("article")
+    for child in childrenArticles:
+        a = child.find("a", {"class" : 'transition'})
+        print('Lien image:')
+        print(a.img['src'])
+        h2 = child.find("h2", {"class" : 'post-title'})
+        print('Lien page:')
+        print(h2.a['href'])
+        linkPage = h2.a['href']
+        print('Titre:')
+        print(h2.text)
+        divdesc = child.find("div", {"class" : 'post-content'})
+        print('Description:')
+        print(divdesc.text)
+        divcreaver = child.find("div", {"class" : 'post-meta'})
+        divver = divcreaver.find("span", {"class" : 'version'})
+        print('Version:')
+        print(divver.text)
+        divcrea = divcreaver.find("span", {"class" : 'developer'})
+        print('Creator:')
+        print(divcrea.text)
+        print('//////////////////////////////////////////////')
+        r2 = requests.get(linkPage.replace(' ',''))
+        soup2 = BeautifulSoup(r2.text,"lxml")   
+        divdownload = find_by_text(soup2, 'Download', 'a')
+        if divdownload['href'] != 'Nonetype'
+        linkDownload = divdownload['href']
+        print('Lien download:')
+        print(linkDownload)
+        print('//////////////////////////////////////////////')
+           
+
+scrap(72)
 
 
-r = requests.get(URL)
-soup = BeautifulSoup(r.text,"lxml")
-#print(soup.prettify())
-
-blogRow = soup.find("section", {"class" : 'main-content'})
-childrenArticles = blogRow.findChildren("article")
-for child in childrenArticles:
-    a = child.find("a", {"class" : 'transition'})
-    print('URL image:')
-    print(a.img['src'])
-    h2 = child.find("h2", {"class" : 'post-title'})
-    print('Lien page:')
-    print(h2.a['href'])
-    linkPage = h2.a['href']
-    print('Titre:')
-    print(h2.text)
-    divdesc = child.find("div", {"class" : 'post-content'})
-    print('Description:')
-    print(divdesc.text)
-    divcreaver = child.find("div", {"class" : 'post-meta'})
-    divver = divcreaver.find("span", {"class" : 'version'})
-    print('Version:')
-    print(divver.text)
-    divcrea = divcreaver.find("span", {"class" : 'developer'})
-    print('Creator:')
-    print(divcrea.text)
-    print('/////////////////////////////////////////////')
-    print(linkPage.replace(' ',''))
-    r2 = requests.get(linkPage.replace(' ',''))
-    print(r2.status_code)
-    soup2 = BeautifulSoup(r2.text,"lxml")   
-    test = soup2.find("article", {"class" : 'single-post'})
-    print(test)
 
 
 
