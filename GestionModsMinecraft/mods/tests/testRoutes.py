@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.test import TestCase
-from views import task,listing,scrap,detail,edite,delete
+from mods.views import task,listing,scrap,detail,edite,delete
 
 
 class HomePageTestContent(TestCase):
@@ -20,3 +20,5 @@ class HomePageTestContent(TestCase):
             found = resolve(route)
             self.assertEqual(found.func,function)
 
+test = HomePageTestContent()
+test.test_root_url_resolves_to_home_view()
