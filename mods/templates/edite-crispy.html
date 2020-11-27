@@ -1,0 +1,67 @@
+{% extends "baseBS4.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Modification du mods {{ pers.title }}
+{% endblock %}
+
+{% block navtitle %}
+<div class="text-white">
+<h3>Modification du mods <i>{{ pers.title }}</i></h3>
+</div>
+{% endblock %}
+
+{% block header %}
+<div class="mb-5 text-center">
+    <h1>Modification du mods <i>{{ pers.title }}</i></h1>
+    </div>
+{% endblock %}
+{% block content %}
+
+<form method="post" action="/mods/edit/{{pers.pk}}">
+    
+    {% csrf_token %}
+    <div class="d-md-flex mx-auto w-100 flex-wrap">
+    <div class="col-sm-12 col-md-6 mx-auto">
+        <div class="col-12">
+            {{ form.title|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.description|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.creator|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.version|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.download|as_crispy_field }}
+        </div>
+        <div class="col-12">
+            {{ form.img|as_crispy_field }}
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 mx-auto">
+        <div class="card mx-auto mb-4" style="width: 18rem;">
+            <img class="card-img-top" src="{{pers.img}}" alt="Card image cap">
+            <div class="card-body text-left">
+                <h5 class="card-title">{{pers.title}}</h5>
+                <p><small class="text-muted">Par {{pers.creator}}</small></p>
+                <p><small class="text-muted">Version : {{pers.version}}</small></p>
+                <p class="card-text">{{pers.description}}</p>
+                <div class="d-flex justify-content-between">
+                <button class="btn btn-primary">Détails</button>
+                <button class="btn btn-danger">Suppression</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <button type="submit" id='sub' class="btn btn-success m-4">
+        Sauvegarder les modifications
+    </button>
+</form>
+
+{% endblock %}

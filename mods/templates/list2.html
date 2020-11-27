@@ -1,0 +1,51 @@
+{% extends "baseBS4.html" %}
+
+    {% load static %}
+
+    {% block title %}
+       Mods Minecraft
+    {% endblock %}
+
+    {% block styles %}
+        {{ block.super }}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" 
+          crossorigin="anonymous">
+    {% endblock %}
+    {% block navtitle %}
+<div class="text-white">
+    <h3>Liste des mods</h3>
+</div>
+{% endblock %}
+
+
+    {% block content %}
+    <div class="row justify-content-between">
+    <h1 class="text-center mb-5 mx-auto">Liste des mods minecraft</h1>
+    <div><a href="http://localhost:8000/mods/scrap" class="btn btn-success mr-5"><i class="fas fa-redo-alt"></i></a></div>
+</div>
+    <div class="w-100 row justify-content-around flex-wrap opacity-none">
+
+        {% for mods in objects %}
+
+                    <div class="card mb-4" style="width: 18rem;">
+                        <img class="card-img-top img-fluid w-100" src="{{mods.img}}" alt="{{mods.title}}">
+                        <div class="card-body">
+                            <a class="text-dark text-decoration-none" href="{{mods.download}}"><h5 class="card-title">{{mods.title}}</h5></a>
+                            <p><small class="text-muted">Par {{mods.creator}}</small></p>
+                            <p><small class="text-muted">Version : {{mods.version}}</small></p>
+                            <p class="card-text">{{mods.description}}</p>
+                            <div class="d-flex justify-content-between">
+                            <a href="http://localhost:8000/mods/edit/{{mods.id}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                            <a href="http://localhost:8000/mods/del/{{mods.id}}" class="btn btn-danger" id="{{mods.title}}supp"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                        </div>
+                    </div>
+    {% endfor %}
+    </div>
+    <div class="text-center"><br>
+        <a class="btn btn-success m-3" href="http://localhost:8000/mods/"><i class="fas fa-plus"></i></a>
+    </div>
+   
+
+    {% endblock %}
