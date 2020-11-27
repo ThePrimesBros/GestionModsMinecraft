@@ -4,10 +4,6 @@ from selenium.webdriver.common.keys import Keys
 import time
 import re
 
-
-
-
-
 class NewModTest(TestCase):
 
     '''Test d'ajout et supression d'un mod '''
@@ -38,12 +34,11 @@ class NewModTest(TestCase):
         down.send_keys("http://fsdf.fr")
         time.sleep(1)
 
-        img.send_keys("http://fsdf.fr")
+        img.send_keys("https://www.minecraftmods.com/wp-content/uploads/2020/05/armor-375x200.png")
         time.sleep(1)
 
         browser.find_element_by_id("sub").click()
         time.sleep(1)
-
 
         nom = browser.find_element_by_css_selector("body > main > div.jumbotron > div > div.col-12 > div.card > div.card-body > h5.card-title")
         print(nom.text)

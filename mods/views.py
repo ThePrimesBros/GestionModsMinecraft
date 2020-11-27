@@ -142,28 +142,25 @@ def scrapPage(request):
     
     for child in childrenArticles:
         h2 = child.find("h2", {"class" : 'post-title'})
-        for Mods.title in Mods.objects.all():
-            if h2 != Mods.title:
-                mod = Mods()
-                a = child.find("a", {"class" : 'transition'})
-                mod.img = a.img['src']
-                
-                linkPage = h2.a['href']
-                mod.title = h2.text
-                divdesc = child.find("div", {"class" : 'post-content'})
-                mod.description = divdesc.text
-                divcreaver = child.find("div", {"class" : 'post-meta'})
-                divver = divcreaver.find("span", {"class" : 'version'})
-                mod.version = divver.text
-                divcrea = divcreaver.find("span", {"class" : 'developer'})
-                mod.creator = divcrea.text
-                r2 = requests.get(linkPage.replace(' ',''))
-                soup2 = BeautifulSoup(r2.text,"lxml")   
-                divdownload = find_by_text(soup2, 'Download', 'a')
-                if divdownload == None:
-                    linkDownload =''
-                else: 
-                    linkDownload = divdownload['href']
-                mod.download = linkDownload
-                mod.save()
+        mod = Mods()
+        a = child.find("a", {"class" : 'transition'})
+        mod.img = a.img['src']          
+        linkPage = h2.a['href']
+        mod.title = h2.text
+        divdesc = child.find("div", {"class" : 'post-content'})
+        mod.description = divdesc.text
+        divcreaver = child.find("div", {"class" : 'post-meta'})
+        divver = divcreaver.find("span", {"class" : 'version'})
+        mod.version = divver.text
+        divcrea = divcreaver.find("span", {"class" : 'developer'})
+        mod.creator = divcrea.text
+        r2 = requests.get(linkPage.replace(' ',''))
+        soup2 = BeautifulSoup(r2.text,"lxml")   
+        divdownload = find_by_text(soup2, 'Download', 'a')
+        if divdownload == None:
+            linkDownload =''
+        else: 
+            linkDownload = divdownload['href']
+        mod.download = linkDownload
+        mod.save()
             
