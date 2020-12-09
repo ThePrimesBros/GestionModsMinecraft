@@ -24,11 +24,7 @@
     <h1 class="text-center mb-5 mx-auto">Liste des mods minecraft</h1>
     <div><a href="http://localhost:8000/mods/scrap" class="btn btn-success mr-5"><i class="fas fa-redo-alt"></i></a></div>
 </div>
-<div class="row justify-content-around mb-5">
-        {% for mod in version %}
-        <a href="http://localhost:8000/mods/version/{{mod.id}}" class="btn btn-primary col-1">{{mod.version}}</a>
-        {% endfor %}
-</div>
+
     <div class="w-100 row justify-content-around flex-wrap opacity-none">
 
         {% for mods in objects %}

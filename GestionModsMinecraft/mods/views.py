@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from mods.models import Mods
+from mods.models import Mods, Version
 import requests
 import json
 from bs4 import BeautifulSoup
 import time
 import re
 import sys
+from django.db import IntegrityError
 from django.forms import ModelForm , Textarea
 from django.forms.fields import DateField , ChoiceField ,MultipleChoiceField
 from django import forms
@@ -84,13 +85,19 @@ def delete(request, pers_id):
     context = {'form': form}
     return redirect('http://localhost:8000/mods/listing')
 
+def liste_version(request, version_id):
+    pers = Version.objects.get(pk=version_id)
+    objects = Mods.objects.all().filter(version=pers.version)
+    return render(request, template_name='version_list.html', context={'objects': objects} )
 
 def liste(request):
     objects = Mods.objects.order_by('title').distinct()
-    return render(request, template_name='list2.html', context={'objects': objects} )
+    version = Version.objects.distinct()
+    return render(request, template_name='list2.html', context={'objects': objects, 'version': version} )
+
 
 def scrap(request):
-    nbPage = 15
+    nbPage = 2
     scraping(nbPage)
     return redirect('http://localhost:8000/mods/listing')
 
@@ -162,5 +169,18 @@ def scrapPage(request):
         else: 
             linkDownload = divdownload['href']
         mod.download = linkDownload
-        mod.save()
-            
+
+        vers = Version()
+        divcreaver = child.find("div", {"class" : 'post-meta'})
+        divver = divcreaver.find("span", {"class" : 'version'})
+        vers.version = divver.text
+        
+
+
+        try:
+            mod.save()
+            vers.save()
+        except IntegrityError:
+            pass
+
+        

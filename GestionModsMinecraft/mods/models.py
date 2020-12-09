@@ -8,3 +8,7 @@ class Mods(models.Model):
     version = models.CharField(max_length=30, default="", blank=True, null=True)  
     download = models.CharField(max_length=255, default="", blank=True, null=True)
     img = models.CharField(max_length=255, default="", blank=True, null=True)
+
+class Version(models.Model):
+
+    version = models.CharField(max_length=30, default="", unique=True, null=True)
